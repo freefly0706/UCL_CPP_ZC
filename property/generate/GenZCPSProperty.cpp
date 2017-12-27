@@ -97,3 +97,10 @@ UCLPropertyBase GenZCPSProperty::genTravellingPath(string vPart, uint8_t parse, 
 
     return travellingPath;
 }
+
+UCLPropertyBase GenZCPSProperty::genBoundingBox(string vPart, uint8_t helper) {
+    UCLPropertyBase BoundingBox;
+    BoundingBox.setProperty(14, helper, vPart);
+
+    return BoundingBox;
+}

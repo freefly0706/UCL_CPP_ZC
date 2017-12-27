@@ -17,28 +17,20 @@ void testCommand()
     ucl.setUclCode(code_test);
 
     cout << "\n##############测试属性##############\n\n";
-    UCLPropertySet cdps = generateCDPS();
-    ucl.setPropertySet(cdps);
+//    UCLPropertySet cdps = generateCDPS();
+//    ucl.setPropertySet(cdps);
 
     UCLPropertySet cgps = generateCGPS();
     ucl.setPropertySet(cgps);
 
-    UCLPropertySet zcps = generateZCPS();
+    UCLPropertySet zcps = generateZCPS(2);
     ucl.setPropertySet(zcps);
-    /*
-     * 测试关联UCL
-     */
-    string rstr = "";
 
-    UCLCode rCode = code_test;
-    rCode.setFlag(0);
-    rstr += rCode.pack();
+    UCLPropertySet zcps1 = generateZCPS(3);
+    ucl.setPropertySet(zcps1);
 
-    UCL rUCL = generateRUCL();
-    rstr += rUCL.pack();
-
-    UCLPropertyBase related = GenCDPSProperty::genRelatedUCL(2, rstr);
-    ucl.setProperty(1, related);
+    UCLPropertySet zcps2 = generateZCPS(4);
+    ucl.setPropertySet(zcps2);
 
 //    cout << "\n##############测试打包##############\n\n";
     cout << "--------------UCLPackage-------------- \n";
@@ -86,18 +78,18 @@ UCLPropertySet generateCGPS()
 {
     UCLPropertySet cgps;
     cgps.setHeadCategory(15);
-    UCLPropertyBase sigCon = GenCGPSProperty::genContSig("江苏今年起实施“12311”计划, 全省创意休闲农业工作推进会", SHA_512, NO_SIG);
+    UCLPropertyBase sigCon = GenCGPSProperty::genContSig("CGPS", CRC32, ECDSA);
     cgps.setProperty(sigCon);
-    UCLPropertyBase sigUCL = GenCGPSProperty::genUCLSig(MD5, NO_SIG);
+    UCLPropertyBase sigUCL = GenCGPSProperty::genUCLSig(MD5, DSA);
     cgps.setProperty(sigUCL);
 
     return cgps;
 }
 
-UCLPropertySet generateZCPS()
+UCLPropertySet generateZCPS(int num)
 {
     UCLPropertySet zcps;
-    zcps.setHeadCategory(2);
+    zcps.setHeadCategory(num);
 
     UCLPropertyBase name = GenZCPSProperty::genName("战场");
     zcps.setProperty(name);
@@ -135,38 +127,10 @@ UCLPropertySet generateZCPS()
     UCLPropertyBase tp = GenZCPSProperty::genTravellingPath("10;;北纬N39°40′20.09″ 东经E116°32′13.51");
     zcps.setProperty(tp);
 
+    UCLPropertyBase bb = GenZCPSProperty::genBoundingBox("image09985;car;247 632 310 739 ;0.769765");
+    zcps.setProperty(bb);
+
     return zcps;
-}
-
-UCL generateRUCL()
-{
-    UCL ucl;
-
-    UCLCode code_test = generateCode();
-    code_test.setFlag(0x40); //01000000
-    ucl.setUclCode(code_test);
-
-    UCLPropertySet cdps;
-    cdps.setHeadCategory(1);
-    UCLPropertyBase title = GenCDPSProperty::genTitle("江苏今年起实施“12311”计划 培育百个农业特色镇");
-    cdps.setProperty(title);
-
-//    cout << hex << cdps.generateQuickMatcher()<< "  " << cdps.getPropertyHead().getTotalLength() << endl;
-//    cout << "--------------CDPS-------------- \n";
-//    printPackString(cdps.pack());
-
-    ucl.setPropertySet(cdps);
-
-    UCLPropertySet cgps;
-    cgps.setHeadCategory(15);
-    UCLPropertyBase sigUCL = GenCGPSProperty::genUCLSig(SHA_256, NO_SIG);
-    cgps.setProperty(sigUCL);
-//    cout << "--------------CGPS-------------- \n";
-//    printPackString(cgps.pack());
-
-    ucl.setPropertySet(cgps);
-
-    return ucl;
 }
 
 UCLCode generateCode() {

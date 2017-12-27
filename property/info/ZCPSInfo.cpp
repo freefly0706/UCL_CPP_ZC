@@ -84,16 +84,14 @@ void ZCPSInfo::setPropertyMap(map<int, string> &propertySetCategoryMap,
 }
 
 string ZCPSInfo::getMapValue(map<int, string> m, int key) {
-    if (m.find(key) == m.end())
-    {
+    if (m.find(key) == m.end()) {
         return "无该映射！！！";
     }
     return m[key];
 }
 
 void ZCPSInfo::showProperty(UCLPropertyBase property) {
-    switch (property.getCategory())
-    {
+    switch (property.getCategory()) {
         case 1:
             showName(property);
             break;
@@ -124,16 +122,19 @@ void ZCPSInfo::showProperty(UCLPropertyBase property) {
             break;
         case 13:
             showTravellingPath(property);
+            break;
+        case 14:
+            showBoundingBox(property);
     }
 }
 
 void ZCPSInfo::showName(UCLPropertyBase propertyBase) {
-    cout << "名称: "<<propertyBase.getVPart() << endl;
+    cout << "名称: " << propertyBase.getVPart() << endl;
 }
 
 void ZCPSInfo::showSpaceLoc(UCLPropertyBase propertyBase) {
     int parse = propertyBase.getLPartHead(2, 5);
-    cout << "坐标体系描述位置标准：" << getMapValue(spaceLocMap, parse)<< endl;
+    cout << "坐标体系描述位置标准：" << getMapValue(spaceLocMap, parse) << endl;
     cout << "位置坐标：" << propertyBase.getVPart() << endl;
 }
 
@@ -210,4 +211,14 @@ void ZCPSInfo::showTravellingPath(UCLPropertyBase propertyBase) {
     cout << "运动轨迹: " << propertyBase.getVPart() << endl;
 }
 
+vector<string> ZCPSInfo::getBoundingBox(string vPart) {
+    return UCLPropertiesInfo::split(vPart, DEFAULT_PATTERN);
+}
+
+void ZCPSInfo::showBoundingBox(UCLPropertyBase propertyBase) {
+    vector<string> info = getBoundingBox(propertyBase.getVPart());
+    cout << "所属图片: " << info[0] << "    目标类别: " << info[1] << endl;
+    cout << "相对位置: " << info[2] << endl;
+    cout << "置信度: " << info[3] << endl;
+}
 

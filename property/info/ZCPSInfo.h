@@ -55,6 +55,8 @@ public:
     void showSpaceEnemyS(UCLPropertyBase propertyBase);
     void showMotionFea(UCLPropertyBase propertyBase);
     void showTravellingPath(UCLPropertyBase propertyBase);
+    vector<string> getBoundingBox(string vPart);
+    void showBoundingBox(UCLPropertyBase propertyBase);
 };
 
 #endif //UCL_CPP_ZCPSINFO_H

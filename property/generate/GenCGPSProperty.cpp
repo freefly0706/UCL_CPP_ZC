@@ -78,7 +78,7 @@ UCLPropertyBase GenCGPSProperty::genUCLSig(uint8_t alg, uint8_t helper)
 {
     //helper为0不进行数字签名
     assert(helper <= 5 && helper >= 0);
-    assert(alg <= 5 && alg >= 1);
+    assert(alg <= 5 && alg >= 0);
 
     UCLPropertyBase signature;
     signature.setLPartHead(2, 5, alg);

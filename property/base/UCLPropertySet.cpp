@@ -161,9 +161,9 @@ void UCLPropertySet::unpack(string propertySet)
 
 void UCLPropertySet::showPropertySet()
 {
-    if (propertyHead.getCategory() == 1 ||
-            propertyHead.getCategory() == 15 ||
-            propertyHead.getCategory() == 2) {
+//    if (propertyHead.getCategory() == 1 ||
+//            propertyHead.getCategory() == 15 ||
+//            propertyHead.getCategory() == 2) {
         cout << "属性集合名: " << UPI.getPropertySetCategory(propertyHead.getCategory()) << endl;
         cout << "属性集类别: " << (int)propertyHead.getCategory() << "    属性个数: " << dec << (int)propertyHead.getSize() <<endl;
         map<int, UCLPropertyBase>::iterator property = properties.begin();
@@ -173,16 +173,16 @@ void UCLPropertySet::showPropertySet()
             UPI.showProperty(propertyHead.getCategory(), property->second);
             cout << "------------------------------------" << endl;
         }
-    }
-    else
-    {
-        cout << "自定义属性集合" << endl;
-        cout << "属性集类别: " << (int)propertyHead.getCategory() << "    属性个数: " << (int)propertyHead.getSize()<<endl;
-        map<int, UCLPropertyBase>::iterator property = properties.begin();
-        for (; property != properties.end(); property++) {
-            cout << "属性类别和属性值: " << (int) property->second.getCategory() << "   "
-                 << property->second.getVPart() << endl;
-            cout << "------------------------------------" << endl;
-        }
-    }
+//    }
+//    else
+//    {
+//        cout << "自定义属性集合" << endl;
+//        cout << "属性集类别: " << (int)propertyHead.getCategory() << "    属性个数: " << (int)propertyHead.getSize()<<endl;
+//        map<int, UCLPropertyBase>::iterator property = properties.begin();
+//        for (; property != properties.end(); property++) {
+//            cout << "属性类别和属性值: " << (int) property->second.getCategory() << "   "
+//                 << property->second.getVPart() << endl;
+//            cout << "------------------------------------" << endl;
+//        }
+//    }
 }
